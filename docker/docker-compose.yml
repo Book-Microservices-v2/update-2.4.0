@@ -6,7 +6,7 @@ services:
     ports:
       - '3000:80'
   multiplication:
-    image: multiplication:0.0.1-SNAPSHOT
+    image: multiplication:2.4.0-SNAPSHOT
     environment:
       - SPRING_PROFILES_ACTIVE=docker
       - SPRING_CLOUD_CONSUL_HOST=consul
@@ -16,7 +16,7 @@ services:
     networks:
       - microservices
   gamification:
-    image: gamification:0.0.1-SNAPSHOT
+    image: gamification:2.4.0-SNAPSHOT
     environment:
       - SPRING_PROFILES_ACTIVE=docker
       - SPRING_CLOUD_CONSUL_HOST=consul
@@ -26,7 +26,7 @@ services:
     networks:
       - microservices
   gateway:
-    image: gateway:0.0.1-SNAPSHOT
+    image: gateway:2.4.0-SNAPSHOT
     ports:
       - '8000:8000'
     environment:
@@ -38,7 +38,7 @@ services:
     networks:
       - microservices
   logs:
-    image: logs:0.0.1-SNAPSHOT
+    image: logs:2.4.0-SNAPSHOT
     environment:
       - SPRING_PROFILES_ACTIVE=docker
       - SPRING_CLOUD_CONSUL_HOST=consul
@@ -48,13 +48,13 @@ services:
     networks:
       - microservices
   consul-importer:
-    image: consul-importer:1.0
+    image: consul-importer:1.9
     depends_on:
       - consul-dev
     networks:
       - microservices
   consul-dev:
-    image: consul:1.7.2
+    image: consul:1.9
     container_name: consul
     ports:
       - '8500:8500'

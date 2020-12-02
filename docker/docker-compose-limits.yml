@@ -6,7 +6,7 @@ services:
     ports:
       - '3000:80'
   multiplication:
-    image: learnmicro/multiplication:0.0.1
+    image: learnmicro/multiplication:2.4.0
     environment:
       - SPRING_PROFILES_ACTIVE=docker
       - SPRING_CLOUD_CONSUL_HOST=consul
@@ -16,7 +16,7 @@ services:
     networks:
       - microservices
   gamification:
-    image: learnmicro/gamification:0.0.1
+    image: learnmicro/gamification:2.4.0
     environment:
       - SPRING_PROFILES_ACTIVE=docker
       - SPRING_CLOUD_CONSUL_HOST=consul
@@ -32,7 +32,7 @@ services:
     networks:
       - microservices
   gateway:
-    image: learnmicro/gateway:0.0.1
+    image: learnmicro/gateway:2.4.0
     ports:
       - '8000:8000'
     environment:
@@ -44,7 +44,7 @@ services:
     networks:
       - microservices
   logs:
-    image: learnmicro/logs:0.0.1
+    image: learnmicro/logs:2.4.0
     environment:
       - SPRING_PROFILES_ACTIVE=docker
       - SPRING_CLOUD_CONSUL_HOST=consul
@@ -54,13 +54,13 @@ services:
     networks:
       - microservices
   consul-importer:
-    image: learnmicro/consul-importer:0.0.1
+    image: learnmicro/consul-importer:1.9
     depends_on:
       - consul-dev
     networks:
       - microservices
   consul-dev:
-    image: consul:1.7.2
+    image: consul:1.9
     container_name: consul
     ports:
       - '8500:8500'
