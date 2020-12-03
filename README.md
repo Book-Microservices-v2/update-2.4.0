@@ -43,12 +43,25 @@ To fix this, we have several options [as documented in the release notes](https:
 </dependency>
 ``` 
 
+#### Spring Cloud Sleuth - MDC key names
+
+In the new release of Spring Cloud Sleuth, the legacy MDC keys such as `X-B3-TraceId` and `X-B3-SpanId` have been removed. Now, these keys are aligned with the ones that Brave uses natively. This makes our `logs` service to print empty strings in the logs for the trace identifiers. 
+
+Luckily, this is very easy to fix. We modify the MDC key names in the `logback-spring.xml` file for the `logs` service, and change the pattern so it includes the new key names `traceId` and `spanId`.
+
+```xml
+<Pattern>
+    [%-15marker] [%X{traceId:-},%X{spanId:-}] %highlight(%-5level) %msg%n
+</Pattern>
+```
+
 #### References
 
 Some additional references:
 
 * [Spring Cloud 2020.0 Release Notes](https://github.com/spring-cloud/spring-cloud-release/wiki/Spring-Cloud-2020.0-Release-Notes)
 * [Spring Boot 2.4.0 Release Notes, Embedded Database Detection](https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-2.4-Release-Notes#embedded-database-detection), and the related [pull request](https://github.com/spring-projects/spring-boot/pull/23693#issuecomment-712678254).
+* [Spring Cloud Sleuth - Removed legacy MDC entries](https://github.com/spring-cloud/spring-cloud-sleuth/issues/1221)
 
 ## Running the app
 
