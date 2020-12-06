@@ -1,63 +1,30 @@
 # Book Extra Chapters - U.2.4: Upgrade to Spring Boot 2.4.0, Cloud 2020, JDK 15
 
-This repository contains the source code of the practical use case described in the book [Learn Microservices with Spring Boot (2nd Edition)](https://tpd.io/book-extra).
+This repository contains the source code of the practical use case described in the book [Learn Microservices with Spring Boot (2nd Edition)](https://amzn.to/3nADn4q).
 
-The book follows a pragmatic approach to building a Microservice Architecture. You start with a small monolith and examine the _pros_ and _cons_ that come with a move to microservices. 
+If you want to know more details about the book and its extra chapters, make sure to [visit this page](https://tpd.io/book-extra).
+
+The book follows a pragmatic approach to building a Microservice Architecture, using a reference implementation that evolves from a small monolith to a full microservice system. 
 
 ## Upgrade - Spring Boot 2.4.0, Spring Cloud 2020.0, JDK 15
 
 This extra chapter includes some relevant upgrades for the technology stack used in the book's microservice architecture. 
 
-Note: check the [Book's Web Page](https://tpd.io/book-extra) to see the complete list of chapters and the extra contents.
+All these changes are described in detail in a [blog post](https://thepracticaldeveloper.com/book-update-2.4.0/) at The Practical Developer's website. Visit [https://thepracticaldeveloper.com/book-update-2.4.0/](https://thepracticaldeveloper.com/book-update-2.4.0/)
 
 ### Changes - migrating from Spring Boot 2.3.4 to 2.4.0
 
 A summary of the updates included in this package:
 
-* JDK 15
-* Spring Boot 2.4.0
-* Spring Cloud 2020.0
-* Consul 1.9.X
-* Version changes in the microservices to align them with the Spring Boot version
-
-#### Default username for embedded databases
-
-Spring Boot 2.4 doesn't use the default `sa` username for the H2 embedded database (check the [docs](https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-2.4-Release-Notes#embedded-database-detection)). To be able to use existing databases, we have to add this line to the configuration of both Multiplication and Gamification microservices (`application.properties` files):
-
-```
-spring.datasource.username=sa
-```
-
-You can also skip this change if you don't have any previous database files (or if you delete them). Spring Boot will create the databases with the new default credentials.
-
-#### Spring Cloud Bootstrap
-
-When we upgrade to Spring Cloud 2020.0, we lose the _bootstrap_ functionality. In our projects, we use the `bootstrap.properties` file to adjust the settings of the Consul's Config Server. This means our services will fail when running them in Docker containers, because they can't find the `docker` profile configuration, and they'll try to reach the RabbitMQ server locally (from `localhost` - the container's host).
-
-To fix this, we have several options [as documented in the release notes](https://github.com/spring-cloud/spring-cloud-release/wiki/Spring-Cloud-2020.0-Release-Notes#breaking-changes). In this repository, I chose to add an extra dependency to all projects:
-
-```xml
-<dependency>
-    <groupId>org.springframework.cloud</groupId>
-    <artifactId>spring-cloud-starter-bootstrap</artifactId>
-</dependency>
-``` 
-
-#### Spring Cloud Sleuth - MDC key names
-
-In the new release of Spring Cloud Sleuth, the legacy MDC keys such as `X-B3-TraceId` and `X-B3-SpanId` have been removed. Now, these keys are aligned with the ones that Brave uses natively. This makes our `logs` service to print empty strings in the logs for the trace identifiers. 
-
-Luckily, this is very easy to fix. We modify the MDC key names in the `logback-spring.xml` file for the `logs` service, and change the pattern so it includes the new key names `traceId` and `spanId`.
-
-```xml
-<Pattern>
-    [%-15marker] [%X{traceId:-},%X{spanId:-}] %highlight(%-5level) %msg%n
-</Pattern>
-```
+* The default username for the H2 database is no longer `sa`, so we need to pass this property explicitly or get rid of the old databases.
+* Bootstrap is disabled in the new Spring Cloud version, so we have to enable it again to make the config server setup work properly.
+* The old MDC key names for Sleuth (Brave) have been removed in favor of the new ones, so we have to change the Logs microservice to use these in the Logback configuration file.
 
 #### References
 
-Some additional references:
+* [The main post](https://thepracticaldeveloper.com/book-update-2.4.0/) where I explain all these changes.
+
+Some additional references from the official documentation:
 
 * [Spring Cloud 2020.0 Release Notes](https://github.com/spring-cloud/spring-cloud-release/wiki/Spring-Cloud-2020.0-Release-Notes)
 * [Spring Boot 2.4.0 Release Notes, Embedded Database Detection](https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-2.4-Release-Notes#embedded-database-detection), and the related [pull request](https://github.com/spring-projects/spring-boot/pull/23693#issuecomment-712678254).
@@ -85,7 +52,7 @@ Don't hesitate to create an issue in this repository and post your question/prob
 
 Are you interested in building a microservice architecture from scratch? You'll face all the challenges of designing and implementing a distributed system one by one, and will be able to evaluate if it's the best choice for your project.
 
-Visit [https://tpd.io/book-extra](https://tpd.io/book-extra) for all the details about the book.
+[Buy the book at Amazon](https://amzn.to/3nADn4q), or visit [https://tpd.io/book-extra](https://tpd.io/book-extra) for all the details.
 
 ### Purchase
 
