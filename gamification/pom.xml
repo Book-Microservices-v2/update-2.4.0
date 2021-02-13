@@ -12,11 +12,11 @@
 	<artifactId>gamification</artifactId>
 	<version>2.4.0-SNAPSHOT</version>
 	<name>gamification</name>
-	<description>Gamification Microservice - Learn Microservices with Spring Boot - Book - Chapter 8</description>
+	<description>Gamification Microservice - Learn Microservices with Spring Boot - Book - Upgrade 2.4.0</description>
 
 	<properties>
 		<java.version>15</java.version>
-		<spring-cloud.version>2020.0.0-M5</spring-cloud.version>
+		<spring-cloud.version>2020.0.0</spring-cloud.version>
 	</properties>
 
 	<dependencies>
@@ -110,13 +110,5 @@
 			</plugin>
 		</plugins>
 	</build>
-
-	<repositories>
-		<repository>
-			<id>spring-milestones</id>
-			<name>Spring Milestones</name>
-			<url>https://repo.spring.io/milestone</url>
-		</repository>
-	</repositories>
 
 </project>
