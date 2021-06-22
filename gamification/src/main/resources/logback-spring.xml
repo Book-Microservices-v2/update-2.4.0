@@ -8,7 +8,7 @@
     <appender name="AMQP"
               class="org.springframework.amqp.rabbit.logback.AmqpAppender">
         <layout>
-            <pattern>%d{HH:mm:ss.SSS} [%t] %logger{36} - %msg</pattern>
+            <pattern>%d{HH:mm:ss.SSS} [trace id: %X{traceId:-}, span id: %X{spanId:-}] [%t] %logger{36} - %msg</pattern>
         </layout>
 
         <applicationId>gamification</applicationId>
